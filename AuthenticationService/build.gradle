@@ -32,7 +32,7 @@ dependencyManagement {
 dependencies {
     compile(
             "org.springframework.cloud:spring-cloud-starter-config",
-            'org.springframework.cloud:spring-cloud-starter-netflix-zuul',
+
             'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
