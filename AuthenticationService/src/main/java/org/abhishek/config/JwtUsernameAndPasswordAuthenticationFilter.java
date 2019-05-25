@@ -33,12 +33,12 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         // By default, UsernamePasswordAuthenticationFilter listens to "/login" path.
         // In our case, we use "/auth". So, we need to override the defaults.
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfig.getUri(), "POST"));
+        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(/*jwtConfig.getUri()*/"/auth/login", "POST"));
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException {
+            throws  AuthenticationException {
 
         try {
 
@@ -50,6 +50,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                     creds.getUsername(), creds.getPassword(), Collections.emptyList());
 
             // 3. Authentication manager authenticate the user, and use UserDetialsServiceImpl::loadUserByUsername() method to load the user.
+
             return authManager.authenticate(authToken);
 
         } catch (IOException e) {
@@ -77,6 +78,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         // Add token to header
         response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
+        chain.doFilter(request,response);
     }
 
     // A (temporary) class just to represent the user credentials
